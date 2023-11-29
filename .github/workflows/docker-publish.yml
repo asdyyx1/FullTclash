@@ -21,13 +21,3 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          platforms: linux/amd64,linux/arm64
-          context: .
-          file: ./docker/Dockerfile
-          push: true
-          tags: |
-            ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')/fulltclash:latest
-            ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')/fulltclash:dev
