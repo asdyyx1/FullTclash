@@ -29,5 +29,5 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/fulltclash:latest
-            ghcr.io/${{ github.repository_owner }}/fulltclash:dev
+            ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')/fulltclash:latest
+            ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')/fulltclash:dev
