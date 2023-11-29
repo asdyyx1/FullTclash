@@ -23,7 +23,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Convert owner to lowercase
         run: |
-          owner_lowercase=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          echo "OWNER}" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -32,5 +33,5 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/${owner_lowercase}/fulltclash:latest
-            ghcr.io/${owner_lowercase}/fulltclash:dev
+            ghcr.io/${{ env.OWNER }}/fulltclash:latest
+            ghcr.io/${{ env.OWNER }}/fulltclash:dev
