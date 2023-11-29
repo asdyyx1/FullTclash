@@ -21,6 +21,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Convert owner to lowercase
+        run: |
+          owner_lowercase=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -29,5 +32,5 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/$(echo "AirportR" | tr '[:upper:]' '[:lower:]')/fulltclash:latest
-            ghcr.io/$(echo "AirportR" | tr '[:upper:]' '[:lower:]')/fulltclash:dev
+            ghcr.io/${owner_lowercase}/fulltclash:latest
+            ghcr.io/${owner_lowercase}/fulltclash:dev
