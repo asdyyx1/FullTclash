@@ -24,7 +24,7 @@ jobs:
       - name: Convert owner to lowercase
         run: |
           OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
-          echo "OWNER}" >> $GITHUB_ENV
+          echo "{OWNER}" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
