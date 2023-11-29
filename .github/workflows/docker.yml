@@ -23,7 +23,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Convert owner to lowercase
         run: |
-          echo "OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"" >> $GITHUB_ENV
+          IMG=fulltclash
+          OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
+          echo "IMG=${IMG}" >> $GITHUB_ENV
+          echo "IMAGE=ghcr.io/${OWNER}/${IMG}" >> $GITHUB_ENV
+          echo "GIT_REF=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)" >> $GITHUB_ENV
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -32,5 +36,4 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER }}/fulltclash:latest
-            ghcr.io/${{ env.OWNER }}/fulltclash:dev
+            ${{ env.IMAGE }}:${{ env.GIT_REF }}
